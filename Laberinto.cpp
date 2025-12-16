@@ -114,7 +114,14 @@ void imprimirTablero() {
         cout << endl;
     }
 }
-int main() {
+int main(int argc, char* argv[]) {
+
+    // permitir tamaño desde parámetros externos
+    // Ejemplo: ./laberinto 25 25
+    if (argc >= 3) {
+        filas = atoi(argv[1]);
+        columnas = atoi(argv[2]);
+    }
     srand(time(0));
 
     inicializarTableroLleno();
