@@ -1,9 +1,11 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <random>
+#include <iostream> // Para std::cout, std::endl
+#include <vector>  // Para std::vector
+#include <algorithm> // Para std::shuffle
+#include <cstdlib> // Para rand() y srand()
+#include <ctime>  // Para time() en random
+#include <random> // Para random_shuffle
+#include <chrono> // Para medir tiempo
+
 
 using namespace std;
 
@@ -127,7 +129,16 @@ int main(int argc, char* argv[]) {
     inicializarTableroLleno();
 
     // Generar laberinto desde (1,1) — posición impar
+    auto inicioGen = chrono::high_resolution_clock::now();
+
     generarLaberintoDFS(1, 1);
+
+    auto finGen = chrono::high_resolution_clock::now();
+    auto tiempoGen = chrono::duration_cast<chrono::milliseconds>(finGen - inicioGen).count();
+
+    cout << "Tiempo de generación: " << tiempoGen << " ms\n";
+
+
 
     
     posicionarCaracter(1, 1, 'E');  // entrada
@@ -140,7 +151,15 @@ int main(int argc, char* argv[]) {
     visitadosResolver.assign(filas, vector<bool>(columnas, false));
 
     // Resolver desde la entrada (1,1)
+    auto inicioSol = chrono::high_resolution_clock::now();
+
     resolverDFS(1, 1);
+
+    auto finSol = chrono::high_resolution_clock::now();
+    auto tiempoSol = chrono::duration_cast<chrono::milliseconds>(finSol - inicioSol).count();
+
+    cout << "Tiempo de resolución: " << tiempoSol << " ms\n";
+
 
     imprimirTablero();
 
